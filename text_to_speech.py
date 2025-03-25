@@ -3,13 +3,9 @@ import speech_recognition as sr
 from gtts import gTTS
 import ollama  
 import requests
-import pygame  # Using pygame instead of playsound
 import uuid
 import os
 import time
-
-# Initialize pygame mixer
-pygame.mixer.init()
 
 # Initialize session state for stop button
 if "stop" not in st.session_state:
@@ -76,21 +72,11 @@ def text_to_speech(text):
     tts.save(temp_audio_file)
 
     if not st.session_state.stop:
-        try:
-            pygame.mixer.music.load(temp_audio_file)  # Load file
-            pygame.mixer.music.play()  # Play file
-            
-            # Ensure UI updates while playing
-            while pygame.mixer.music.get_busy():
-                if st.session_state.stop:
-                    pygame.mixer.music.stop()
-                    break
-                time.sleep(0.1)
+        st.audio(temp_audio_file)  # Use Streamlit's built-in audio player
 
-            pygame.mixer.music.unload()  # Unload file to allow deletion
-            os.remove(temp_audio_file)  # Delete temp file
-        except Exception as e:
-            st.error(f"Audio playback error: {str(e)}")
+    # Delete temp file after playback (optional)
+    time.sleep(2)  # Wait for playback to start
+    os.remove(temp_audio_file)
 
 # Streamlit UI
 st.title("🎙️ Local AI Voice Assistant (Ollama)")
@@ -99,7 +85,6 @@ st.title("🎙️ Local AI Voice Assistant (Ollama)")
 stop_placeholder = st.empty()
 if stop_placeholder.button("🛑 Stop"):
     st.session_state.stop = True  # Set stop state
-    pygame.mixer.music.stop()  # Stop any ongoing playback
     st.warning("🔴 Stopped! You can now ask a new question.")
     st.rerun()  # Refresh UI immediately
 
@@ -114,3 +99,4 @@ if st.button("🎤 Speak Now"):
         response = using_mistral(user_input)
         response_placeholder.success(f"🤖 Model said: {response}")
         text_to_speech(response)
+
