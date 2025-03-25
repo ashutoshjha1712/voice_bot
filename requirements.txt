@@ -6,3 +6,4 @@ requests
 pygame
 uuid
 PyAudio
+pydub
