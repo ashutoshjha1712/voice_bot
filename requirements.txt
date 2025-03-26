@@ -1,9 +1,8 @@
 streamlit
-SpeechRecognition
-gtts
-ollama
+audio-recorder-streamlit
+soundfile
+numpy
 requests
-pygame
-uuid
-PyAudio
-pydub
+speechrecognition
+gtts
+ffmpeg-python  # Required for gTTS audio processing
