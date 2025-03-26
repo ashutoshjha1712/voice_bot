@@ -110,7 +110,7 @@ def text_to_speech(text):
     return temp_audio_file
 
 # Streamlit UI
-st.title("🎙️ Audio Q&A with Mistral AI & Speech Output")
+st.title("🎙️ AI Interview with Ashutosh ")
 
 # Record Audio
 audio_bytes = audio_recorder(
@@ -145,7 +145,7 @@ if audio_bytes:
             print(ai_response)
             if ai_response:
                 st.success("✅ AI Response Generated")
-                st.write(f"**Mistral AI Answer:** {ai_response}")
+                st.write(f"**Ashutosh Answer:** {ai_response}")
 
                 # Convert AI response to speech
                 speech_file = text_to_speech(ai_response)
@@ -153,4 +153,4 @@ if audio_bytes:
 
                 st.success("🎧 AI response converted to speech!")
             else:
-                st.error("❌ Failed to get a response from Mistral AI")
+                st.error("❌ Failed to get a response from  Ashutosh")
